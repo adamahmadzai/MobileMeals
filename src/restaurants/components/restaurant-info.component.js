@@ -6,52 +6,24 @@ import { Text } from "../../components/typography/text.component.js";
 import { SvgXml } from "react-native-svg";
 import star from "../../../assets/star";
 import {Spacer} from "../../components/spacer/spacer.component";
+import open from "../../../assets/open"
+import {
+  RestaurantCard,RestaurantCardCover,Address,Rating,Status,StatusEnd,Icon
+
+} from "./restaurant-info-card-styles";
 
 
-const RestaurantCard = styled(Card)`
-  backgroundcolor: ${(props) => props.theme.colors.bg.primary};
-`;
-const RestaurantCardCover = styled(Card.Cover)`
-  padding: ${(props) => props.theme.space[3]};
-  backgroundcolor: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const Address = styled(Text)`
-  font-family: ${(props) => props.theme.fonts.body};
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  color: ${(props) => props.theme.colors.ui.primary};
-`;
-
-const Rating = styled(View)`
-  flex-direction: row;
-  padding-top: ${(props) => props.theme.space[2]};
-  padding-bottom: ${(props) => props.theme.space[2]};
-`;
-const Status = styled(View)`
-flex-direction: row;
-justify-direction: row;
-padding-top: ${(props) => props.theme.space[2]};
-padding-bottom: ${(props) => props.theme.space[2]};
-`;
-const StatusEnd = styled(View)`
-  flex-direction: row;
-  justify-direction: row;
-`;
-const Icon = styled.Image`
-  width: 15px;
-  height: 15px;
-`;
 export const RestaurantInfo = ({ restaurant = {} }) => {
   const {
     name = "Some restaurant",
-    icon,
+    icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
     photos = [
       "https://img.freepik.com/premium-photo/pizza_100342-33.jpg?w=740",
     ],
     address = "515 Loudon Rd, Loudonville, NY 12211",
-    isOpenNow = false,
-    rating = 3.2,
-    isClosedTemporarily = false,
+    isOpenNow = true,
+    rating = 3.7,
+    isClosedTemporarily = true,
   } = restaurant;
   const ratingArray = Array.from(new Array(Math.floor(rating)));
   console.log(ratingArray);
@@ -63,9 +35,9 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
         <Text variant="label">{name}</Text>
         <Status>
           <Rating>
-            {ratingArray.map(() => {
-              <SvgXml xml={star} height={20} width={20}></SvgXml>;
-            })}
+            {ratingArray.map(() => (
+              <SvgXml xml={star} height={20} width={20}/>
+            ))}
           </Rating>
           <StatusEnd>
             {isClosedTemporarily && (
@@ -77,7 +49,7 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
               {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
             </Spacer>
             <Spacer position="left" size="large">
-              <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
+              <Icon source={{ uri: icon }} />
             </Spacer>
           </StatusEnd>
         </Status>
